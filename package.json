@@ -1,0 +1,55 @@
+{
+  "name": "my-electron-react-app",
+  "version": "1.0.0",
+  "description": "A basic Electron app with React",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "npx concurrently --kill-others \"npx cross-env NODE_ENV=development npx webpack --config webpack/main.webpack.config.js --watch\" \"npx cross-env NODE_ENV=development npx webpack serve --config webpack/renderer.webpack.config.js\" \"npx wait-on http://localhost:4000 && npx cross-env NODE_ENV=development electron .\"",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npx cross-env NODE_ENV=production npx webpack --config webpack/main.webpack.config.js && npx webpack --config webpack/renderer.webpack.config.js",
+    "package": "npm run build && electron-builder --dir",
+    "package:debug": "npm run build && electron-builder --dir --debug",
+    "prod": "npm run package && electron ."
+  },
+  "author": "t-i",
+  "license": "MIT",
+  "build": {
+    "appId": "com.yourcompany.my-electron-react-app",
+    "productName": "My Electron React App",
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release-builds",
+      "buildResources": "build"
+    },
+    "asar": true,
+    "asarUnpack": [
+      "dist/main.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.11.0",
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3",
+    "html-webpack-plugin": "^5.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^4.9.5",
+    "wait-on": "^7.2.0",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0"
+  }
+}
